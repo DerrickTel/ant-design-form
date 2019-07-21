@@ -1,6 +1,6 @@
 {
   "name": "ant-design-form",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "快速构建ant-design表单",
   "main": "lib/release.js",
   "repository": {
