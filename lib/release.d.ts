@@ -4,4 +4,19 @@ export interface SearchViewProps {
   data?: Array<Object>;
 }
 declare const SearchView: React.FC<SearchViewProps>;
-export {SearchView}
+
+export interface FormViewProps {
+  showData?: Object;
+  formData?: Array<Object>;
+  selectSearch?: Function;
+  selectSearchOption?: Array<Object>;
+  selectSearchCallBack?: Function;
+  imgUploadUrl?: String;
+  imgUploadHeaders?: Object;
+}
+declare const FormView: React.FC<FormViewProps>;
+
+export {
+  SearchView,
+  FormView,
+}
