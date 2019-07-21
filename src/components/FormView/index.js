@@ -61,7 +61,8 @@ class FormView extends PureComponent {
       category,
       selectSearch,
       selectSearchOption,
-      selectSearchCallBack
+      selectSearchCallBack,
+      cascaderOption
     } = this.props;
 
     let ShowType;
@@ -131,6 +132,7 @@ class FormView extends PureComponent {
               selectSearch={selectSearch}
               selectSearchOption={selectSearchOption}
               selectSearchCallBack={selectSearchCallBack}
+              cascaderOption={cascaderOption}
             />
           )}
           </Item>
