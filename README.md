@@ -165,11 +165,6 @@ SearchView-data-option
             key:'input',
             type:'input',
             Message: '输入input',
-        }, {
-            label: 'imageUpload',
-            key: 'imageUpload',
-            type: 'imageUpload',
-            Message: 'imageUpload'
         }
     ]}
     submitText="提交"
