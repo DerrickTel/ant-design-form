@@ -1,6 +1,6 @@
 {
   "name": "ant-design-form",
-  "version": "0.2.5",
+  "version": "0.2.7",
   "description": "快速构建ant-design表单",
   "main": "lib/release.js",
   "repository": {
@@ -17,10 +17,7 @@
   },
   "homepage": "https://github.com/DerrickTel/ant-design-form#readme",
   "dependencies": {
-    "antd": "^3.20.0",
-    "braft-editor": "^2.3.7",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "braft-editor": "^2.3.7"
   },
   "scripts": {
     "start": "webpack-dev-server --host 0.0.0.0",
@@ -40,6 +37,9 @@
     ]
   },
   "devDependencies": {
+    "antd": "^3.20.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.5",
     "@babel/plugin-proposal-class-properties": "^7.4.4",

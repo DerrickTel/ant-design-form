@@ -64,7 +64,7 @@ class FormView extends PureComponent {
       selectSearchOption,
       selectSearchCallBack,
       imgUploadHeaders,
-      imgUploadUrl
+      imgUploadUrl,
       cascaderOption
     } = this.props;
 
@@ -117,7 +117,6 @@ class FormView extends PureComponent {
           ShowType = FormError;
       }
       return (
-        <Suspense key={key} fallback={<div>Loading...</div>}>
           <Item label={label} key={key}>
             {getFieldDecorator(key, {
             rules: [
@@ -144,7 +143,6 @@ class FormView extends PureComponent {
             />
           )}
           </Item>
-        </Suspense>
       )
     })
   }

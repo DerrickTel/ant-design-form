@@ -12,7 +12,7 @@ yarn add ant-design-form
 
 ```react
 import {FormView} from 'ant-design-form'
-ReactDOM.render(<FromView />, mountNode);
+ReactDOM.render(<FormView />, mountNode);
 ```
 
 可能需要引入ant-design的样式
@@ -149,7 +149,7 @@ SearchView-data-option
 ![](http://i1.fuimg.com/691643/9fa6dc1bf08506de.png)
 
 ```react
-<FromView
+<FormView
     formData={[
         {
             label:'select',

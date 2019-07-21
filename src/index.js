@@ -6,12 +6,12 @@ import {demo1} from './constant/formView'
 import 'antd/dist/antd.css'
 import { Card } from 'antd';
 
-const FromView  = lazy(() => import('./components/FormView'));
+const FormView  = lazy(() => import('./components/FormView'));
 
 const ReactDemo = () => (
   <Card title="FromViewDemo">
     <Suspense fallback={<div>Loading...</div>}>
-      <FromView
+      <FormView
         formData={[
           {
             label:'select',

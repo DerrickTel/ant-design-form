@@ -13,6 +13,7 @@ export interface FormViewProps {
   selectSearchCallBack?: Function;
   imgUploadUrl?: String;
   imgUploadHeaders?: Object;
+  cascaderOption?: Array<Object>;
 }
 declare const FormView: React.FC<FormViewProps>;
 
