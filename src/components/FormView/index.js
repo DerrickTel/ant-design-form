@@ -65,6 +65,7 @@ class FormView extends PureComponent {
       selectSearchCallBack,
       imgUploadHeaders,
       imgUploadUrl
+      cascaderOption
     } = this.props;
 
     let ShowType;
@@ -139,6 +140,7 @@ class FormView extends PureComponent {
               selectSearchCallBack={selectSearchCallBack} // 选择之后的返回，默认是返回severKey
               imgUploadUrl={imgUploadUrl} // 图片上传的地址
               imgUploadHeaders={imgUploadHeaders} // 图片上传的header
+              cascaderOption={cascaderOption} // 联级选择器的下拉框
             />
           )}
           </Item>
