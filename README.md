@@ -172,6 +172,7 @@ SearchView-data-option
             Message: 'imageUpload'
         }
     ]}
+    submitText="提交"
 />
 ```
 
