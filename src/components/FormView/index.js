@@ -13,6 +13,7 @@ import FormImageUpload from '../FormItems/FormImageUpload';
 import FormCascader from '../FormItems/FormCascader';
 import FormError from '../FormItems/FormError';
 import FormRichTextEditor from '../FormItems/FormRichTextEditor';
+import FormSelectGroup from '../FormItems/FormSelectGroup';
 
 const { Item } = Form;
 
@@ -61,7 +62,9 @@ class FormView extends PureComponent {
       category,
       selectSearch,
       selectSearchOption,
-      selectSearchCallBack
+      selectSearchCallBack,
+      imgUploadHeaders,
+      imgUploadUrl
     } = this.props;
 
     let ShowType;
@@ -106,6 +109,9 @@ class FormView extends PureComponent {
         case 'cascader':
           ShowType = FormCascader;
           break;
+        case 'selectGroup':
+          ShowType = FormSelectGroup;
+          break;
         default:
           ShowType = FormError;
       }
@@ -118,25 +124,56 @@ class FormView extends PureComponent {
                 required: this.showRequire(disabled, notRequired),
                 message: Message,
                 pattern: pattern || undefined,
-                type: (type === 'cascader' ? 'array' : type === 'datePicker') ? 'object' : 'string',
+                type: this.initialType(),
               },
             ],
-            initialValue: showData?.[key] || undefined,
+            initialValue: this.initialValue(showData?.[key], type),
           })(
             <ShowType
               showData={showData?.[key]}
               option={option}
               Message={Message}
               disabled={!!(disabled || category === 'check')}
-              selectSearch={selectSearch}
-              selectSearchOption={selectSearchOption}
-              selectSearchCallBack={selectSearchCallBack}
+              selectSearch={selectSearch} // 文本框值变化时回调（针对ant-design-select-onSearch）
+              selectSearchOption={selectSearchOption} // select-search对应的option([{severKey:'', showValue: ''}])
+              selectSearchCallBack={selectSearchCallBack} // 选择之后的返回，默认是返回severKey
+              imgUploadUrl={imgUploadUrl} // 图片上传的地址
+              imgUploadHeaders={imgUploadHeaders} // 图片上传的header
             />
           )}
           </Item>
         </Suspense>
       )
     })
+  }
+
+  initialType = (type) => {
+    if(type === 'cascader' || type === 'imageUploadList') {
+      return 'array'
+    }
+    if(type === 'datePicker') {
+      return 'object'
+    }
+    return 'string'
+  }
+
+  initialValue = (showData, type) => {
+    if(showData === undefined || showData === null) {
+      return undefined
+    }
+    if(showData === 0) {
+      return  String(0)
+    }
+    if( type === 'datePicker' ) {
+      return moment(showData)
+    }
+    if( typeof showData === 'number' ) {
+      return String(showData)
+    }
+    if( type === 'richTextEditor' ) {
+      return BraftEditor.createEditorState(showData)
+    }
+    return showData
   }
 
   handleSubmit = e => {
