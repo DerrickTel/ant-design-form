@@ -1,3 +1,5 @@
+
+
 # 安装
 
 ```javascript
@@ -220,4 +222,188 @@ FormView-formData-option
 | severKey  | select的Value值          | string   |
 | showValue | select用于前端展示的文案 | string   |
 
-#### ModalView（敬请期待
+## ModalView
+
+#### Demo
+
+![](http://i1.fuimg.com/691643/f4ac30e623b592cd.png)
+
+点击新增
+
+![](http://i2.tiimg.com/691643/55456871b8982fe0.png)
+
+点击查看
+
+![](http://i2.tiimg.com/691643/3bc302605963fa24.png)
+
+点击编辑
+
+![](http://i2.tiimg.com/691643/3850ea41d20aaa75.png)
+
+点击（编辑或者新增）的确定
+
+![Markdown](http://i2.tiimg.com/691643/5eb0ed7c0e30818c.png)
+
+
+
+```react
+const dataSource = [
+  {
+    key: '1',
+    name: '胡彦斌',
+    age: 32,
+    id: 'asd111asd111',
+  },
+  {
+    key: '2',
+    name: '胡彦祖',
+    age: 42,
+    id: 'asd222asd222',
+  },
+];
+
+class ReactDemo extends PureComponent {
+  state = {
+    visible: false,
+    showData: {},
+    category: 'check',
+  }
+
+  clickModal = (category, showData) =>{
+    this.setState({
+      visible: true,
+      category,
+      showData
+    });
+  }
+
+  hideModal = () => {
+    this.setState({visible: false})
+  }
+
+  columns = () => [
+    {
+      title: 'ID',
+      dataIndex: 'id',
+      key: 'id',
+    },
+    {
+      title: '姓名',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: '年龄',
+      dataIndex: 'age',
+      key: 'age',
+    },
+    {
+      title: '操作',
+      render: (text, record) => <>
+        <Button onClick={() => this.clickModal('check', record)} type="primary">查看</Button>
+        <Divider type="vertical" />
+        <Button onClick={() => this.clickModal('edit', record)}>编辑</Button>
+      </>
+    }
+  ];
+
+  render(){
+    const {visible, category, showData} = this.state;
+    return (
+      <Card title="ModalViewDemo">
+        <Button onClick={() => this.clickModal('create', {})}>我是新增</Button>
+        <ModalView
+          onOk={params => {console.log(params); this.setState({visible: false})}}
+          onCancel={() => {this.setState({visible: false})}}
+          show={visible}
+          category={category}
+          data={[
+            {
+              label: 'ID（无需录入）',
+              key: 'id',
+              type: 'input',
+              Message: 'ID自动录入无需您操心~',
+              disabled: true,
+            },
+            {
+              label: '姓名',
+              key: 'name',
+              type: 'input',
+              Message: '请输入姓名',
+            },
+            {
+              label: '年龄',
+              key: 'age',
+              type: 'select',
+              Message: '请选择年龄',
+              option: [
+                { severKey: '32', showValue: '12岁' }, 
+                { severKey: '42', showValue: '13岁' },
+              ],
+            },
+          ]}
+          showData={showData}
+        />
+        <Table dataSource={dataSource} columns={this.columns()} />
+      </Card>
+    );
+  }
+}
+```
+
+| 参数名               | 说明                                                         | 数据类型        |
+| -------------------- | ------------------------------------------------------------ | --------------- |
+| onOk                 | 点击弹窗的确定之后的会调用的函数                             | function        |
+| onCancel             | 隐藏弹框之后会调用的函数（点击右上角X，点击非弹出的地方）    | function        |
+| show                 | 是否显示弹窗                                                 | boolean         |
+| category             | 弹窗的类型（与弹窗的title绑定）（暂时只支持'check','edit','create','import'） | string          |
+| data                 | 弹窗显示的数据类型                                           | array< object > |
+| showData             | 查看或者编辑时的默认数据                                     | object          |
+| importCallBack       | 导入之后，点击确定的回调函数                                 | function        |
+| importColumns        | 导入时候显示表格的表头(与Table的columns相同)                 | array< object > |
+| downloadUrl          | 导入表格的下载地址                                           | string          |
+| imgUploadHeaders     | 图片上传组件的请求header                                     | object          |
+| imgUploadUrl         | 图片上传组件的请求地址                                       | string          |
+| fileUploadHeaders    | 文件（暂时只支持excel）上传地址                              | string          |
+| fileUploadUrl        | *文件（暂时只支持excel）上传header*                          | string          |
+| cascaderOption       | 联级选择组件（cascader）的option                             | array< object > |
+| selectSearch         | 使用selectSearch这个组件时的查询函数                         | function        |
+| selectSearchOption   | 使用selectSearch这个组件时显示的下拉框                       | array< object > |
+| selectSearchCallBack | 使用selectSearch这个组件时点击选中的回调函数，默认返回选中的key | function        |
+
+
+
+ModalView-data
+
+| 参数名  | 说明                                                         | 数据类型        |
+| ------- | ------------------------------------------------------------ | --------------- |
+| label   | 前端显示的文案，表示这个地方要输入什么                       | string          |
+| key     | 与服务端交互的key                                            | string          |
+| type    | 展示定制的组件（基本上都是从ant-design里面选取的）（可以是输入框，选择框等） | string          |
+| Message | placeholder展示的文案，表单错误的时候出现的文案              | string          |
+| option  | 用于select组件中的可选项。                                   | array< object > |
+
+ModalView-data-type
+
+| 参数名          | 说明                                  | 数据类型 |
+| --------------- | ------------------------------------- | -------- |
+| input           | 文本输入框                            | string   |
+| select          | 选择框                                | string   |
+| datePicker      | 日期选择框(返回moment)                | string   |
+| rangePicker     | 日期联级选择框（返回是[moment,moment] | string   |
+| radioGroup      | 单选框                                | string   |
+| richTextEditor  | 富文本编辑器                          | string   |
+| imageUploadList | 图片上传（多张                        | string   |
+| textArea        | 长文本输入框                          | string   |
+| selectSearch    | 带搜索的选择框                        | string   |
+| imageUpload     | 图片上传（单张                        | string   |
+| cascader        | 联级选择                              | string   |
+
+
+
+ModalView-data-option
+
+| 参数名    | 说明                     | 数据类型 |
+| --------- | ------------------------ | -------- |
+| severKey  | select的Value值          | string   |
+| showValue | select用于前端展示的文案 | string   |

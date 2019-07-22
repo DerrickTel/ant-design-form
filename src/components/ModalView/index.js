@@ -1,5 +1,5 @@
 import React, { PureComponent, lazy, Suspense } from 'react';
-import { Modal, Form } from 'antd';
+import { Modal, Form, Button, Upload, Table, message } from 'antd';
 import PropTypes from 'prop-types';
 import FormInput from '../FormItems/FormInput';
 import FormDataPicker from '../FormItems/FormDataPicker';
@@ -33,15 +33,15 @@ class ModalView extends PureComponent {
   caseCategory = category => {
     switch (category) {
       case 'check':
-        return { title: '查看' };
+        return '查看' ;
       case 'import':
-        return { title: '导入', import: true };
+        return '导入';
       case 'create':
-        return { title: '新增' };
+        return '新增' ;
       case 'edit':
-        return { title: '编辑' };
+        return '编辑' ;
       default:
-        return { title: '查看' };
+        return '查看' ;
     }
   };
 
@@ -79,7 +79,10 @@ class ModalView extends PureComponent {
       category,
       selectSearch,
       selectSearchOption,
-      selectSearchCallBack
+      selectSearchCallBack,
+      imgUploadUrl,
+      imgUploadHeaders,
+      cascaderOption,
     } = this.props;
 
     let ShowType;
@@ -136,18 +139,21 @@ class ModalView extends PureComponent {
                 required: this.showRequire(disabled, notRequired),
                 message: Message,
                 pattern: pattern || undefined,
-                type: (type === 'cascader' ? 'array' : type === 'datePicker') ? 'object' : 'string',
+                type: this.initialType(type),
               },
             ],
-              initialValue: showData?.[key] || undefined,
+            initialValue: this.initialValue(showData?.[key], type),
             })(
               <ShowType
                 option={option}
                 Message={Message}
                 disabled={!!(disabled || category === 'check')}
-                selectSearch={selectSearch}
-                selectSearchOption={selectSearchOption}
-                selectSearchCallBack={selectSearchCallBack}
+                selectSearch={selectSearch} // 文本框值变化时回调（针对ant-design-select-onSearch）
+                selectSearchOption={selectSearchOption} // select-search对应的option([{severKey:'', showValue: ''}])
+                selectSearchCallBack={selectSearchCallBack} // 选择之后的返回，默认是返回severKey
+                imgUploadUrl={imgUploadUrl} // 图片上传的地址
+                imgUploadHeaders={imgUploadHeaders} // 图片上传的header
+                cascaderOption={cascaderOption} // 联级选择器的下拉框
               />
             )}
           </Item>
@@ -155,6 +161,36 @@ class ModalView extends PureComponent {
       );
     });
   };
+
+  
+  initialType = (type) => {
+    if(type === 'cascader' || type === 'imageUploadList') {
+      return 'array'
+    }
+    if(type === 'datePicker') {
+      return 'object'
+    }
+    return 'string'
+  }
+
+  initialValue = (showData, type) => {
+    if(showData === undefined || showData === null) {
+      return undefined
+    }
+    if(showData === 0) {
+      return  String(0)
+    }
+    if( type === 'datePicker' ) {
+      return moment(showData)
+    }
+    if( typeof showData === 'number' ) {
+      return String(showData)
+    }
+    if( type === 'richTextEditor' ) {
+      return BraftEditor.createEditorState(showData)
+    }
+    return showData
+  }
 
   checkOk = () => {
     const { onOk, form, form: { resetFields } } = this.props;
@@ -175,29 +211,66 @@ class ModalView extends PureComponent {
     onCancel();
   };
 
+  upLoadProps = () => {
+    const {fileUploadHeaders, fileUploadUrl, fileUploadCallback} = this.props
+    const props = {
+      name: 'file',
+      action: fileUploadUrl,
+      headers: fileUploadHeaders,
+      onChange: info => {
+        if (info.file.status !== 'uploading') {
+          const { data } = info.file.response;
+          this.setState({ data });
+        }
+        if (info.file.status === 'done') {
+          fileUploadCallback(info.file.response)
+          message.success(`${info.file.name}上传成功！`);
+        } else if (info.file.status === 'error') {
+          message.error(`${info.file.name}上传失败！`);
+        }
+      },
+    };
+    return props;
+  };
+
+  importOk = () => {
+    const { data } = this.state;
+    const { importCallBack } = this.props;
+    importCallBack(data);
+  };
+
   render() {
-    const { show, category = '' } = this.props;
+    const { show, category = '', importColumns, data, downloadUrl } = this.props;
     const modalData = this.caseCategory(category);
     return (
       <Modal
         visible={show}
         onCancel={this.closeModal}
         onOk={category === 'import' ? this.importOk : this.checkOk}
-        title={modalData.title}
+        title={modalData}
         width="70%"
-        footer={modalData.title === '查看' ? null : undefined}
+        footer={modalData === '查看' ? null : undefined}
+        okText="确认"
+        cancelText="取消"
       >
-        <Form style={{ paddingTop: '20px' }} {...formItemLayout}>
-          {this.form()}
-          {/* 测试数据暂时不删，等这个组件完美了再删 */}
-          {/* <Item>
-              {getFieldDecorator('key', {
-                initialValue: '123',
-              })(
-                <Input />
-              )}
-            </Item> */}
-        </Form>
+        {category === 'import' ? (
+          <>
+            <div style={{marginBottom: '20px'}}>
+              <Button type="primary" onClick={() => window.location.href = downloadUrl}>
+                下载模板
+              </Button>
+              <Upload {...this.upLoadProps()}>
+                <Button style={{marginLeft: '20px'}}>上传Excel</Button>
+              </Upload>
+            </div>
+            
+            <Table dataSource={data} columns={importColumns} />
+          </>
+        ) : (
+          <Form style={{ paddingTop: '20px' }} {...formItemLayout}>
+            {this.form()}
+          </Form>
+        )}
       </Modal>
     );
   }
@@ -208,19 +281,24 @@ ModalView.propTypes = {
   onCancel: PropTypes.func.isRequired, // 隐藏弹框
   show: PropTypes.bool, // 是否显示弹窗
   category: PropTypes.string, // 弹框的类型（title显示
-  data: PropTypes.arrayOf(PropTypes.object).isRequired, // 数据类型; 位置:'@/components/constant/sormView.js' 记得写注释; 格式: `s${文件名}`
+  data: PropTypes.arrayOf(PropTypes.object).isRequired, // 数据类型; 位置:'@/components/constant/formView.js' 记得写注释; 格式: `f${文件名}`
   showData: PropTypes.object, // 查看或者编辑时的默认数据
   importCallBack: PropTypes.func, // 导入之后，点击确定的回调函数
-  importColums: PropTypes.array, // 导入时候显示表格的表头
-  downloadUrl: PropTypes.string, // 下载的模板的文件名
+  importColumns: PropTypes.array, // 导入时候显示表格的表头
+  downloadUrl: PropTypes.string, // 下载的模板地址
+  imgUploadHeaders: PropTypes.object, // 图片上传地址
+  imgUploadUrl: PropTypes.string, // 图片上传header
+  fileUploadHeaders: PropTypes.object, // 文件（暂时只支持excel）上传地址
+  fileUploadUrl: PropTypes.string, // 文件（暂时只支持excel）上传header
+  cascaderOption: PropTypes.array, // 联级选择器的下拉框
 };
 
 ModalView.defaultProps = {
   show: false,
   category: 'check',
   showData: {},
-  importCallBack: () => { },
-  importColums: [],
+  importCallBack: () => {},
+  importColumns: [],
   downloadUrl: '',
 };
 

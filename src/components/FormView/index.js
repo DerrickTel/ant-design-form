@@ -124,7 +124,7 @@ class FormView extends PureComponent {
                 required: this.showRequire(disabled, notRequired),
                 message: Message,
                 pattern: pattern || undefined,
-                type: this.initialType(),
+                type: this.initialType(type),
               },
             ],
             initialValue: this.initialValue(showData?.[key], type),
