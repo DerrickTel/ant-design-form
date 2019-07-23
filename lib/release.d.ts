@@ -18,7 +18,7 @@ export interface FormViewProps {
 declare const FormView: React.FC<FormViewProps>;
 
 
-export interface FormViewProps {
+export interface ModalViewProps {
   showData?: Object;
   selectSearch?: Function;
   selectSearchOption?: Array<Object>;
