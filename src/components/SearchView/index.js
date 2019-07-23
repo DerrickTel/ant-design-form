@@ -33,7 +33,7 @@ class SearchView extends Component {
 
     return data.map((value) => {
 
-      const { label, key, type, Message, option, defaultValue } = value;
+      const { label, key, type, Message, option, defaultValue, additional } = value;
       if (!value) {
         return null
       }
@@ -76,6 +76,7 @@ class SearchView extends Component {
           <Item label={this.showLabel(type, label)} key={key}>
             {getFieldDecorator(key, { initialValue: defaultValue })(
               <ShowType
+                {...additional}
                 option={option}
                 Message={Message}
               />
@@ -100,7 +101,7 @@ class SearchView extends Component {
 
   render() {
     return (
-      <Form layout="inline">
+      <Form {...this.props} layout="inline">
         {this.form()}
         <Item>
           <Button type="primary" onClick={this.search}>查询</Button>

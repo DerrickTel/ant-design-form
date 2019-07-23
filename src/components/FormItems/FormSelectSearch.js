@@ -29,9 +29,10 @@ class FormSelectSearch extends Component {
   };
 
   render() {
-    const { Message, disabled, selectSearch, value } = this.props;
+    const { Message, disabled, selectSearch, value, additional } = this.props;
     return (
       <Select
+        {...additional}
         showSearch
         disabled={disabled}
         value={value}

@@ -72,7 +72,7 @@ class FormView extends PureComponent {
 
     return formData.map(value => {
 
-      const { label, key, type, Message, option, disabled, pattern, notRequired } = value;
+      const { label, key, type, Message, option, disabled, pattern, notRequired, additional } = value;
       if(!value){
         return null
       }
@@ -130,6 +130,7 @@ class FormView extends PureComponent {
             initialValue: this.initialValue(showData?.[key], type),
           })(
             <ShowType
+              {...additional}
               showData={showData?.[key]}
               option={option}
               Message={Message}
@@ -191,7 +192,7 @@ class FormView extends PureComponent {
     const {submitText} = this.props;
     return (
       <>
-        <Form {...formItemLayout} onSubmit={this.handleSubmit}>
+        <Form {...formItemLayout} {...this.props}  onSubmit={this.handleSubmit}>
           {this.form()}
           <br />
           <Item {...tailFormItemLayout}>

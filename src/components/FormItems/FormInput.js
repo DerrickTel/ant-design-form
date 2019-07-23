@@ -16,9 +16,9 @@ class FormInput extends Component {
   }
 
   render() {
-    const {Message, value, disabled} = this.props;
+    const {Message, value, disabled, additional} = this.props;
     return (
-      <Input disabled={disabled} placeholder={Message} value={value} onChange={this.change} />
+      <Input {...additional} disabled={disabled} placeholder={Message} value={value} onChange={this.change} />
       );
   }
 }

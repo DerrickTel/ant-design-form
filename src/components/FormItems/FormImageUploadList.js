@@ -99,12 +99,12 @@ class FormImageUploadList extends Component {
   }
 
   render() {
-    const { previewVisible, previewImage } = this.state;
+    const { previewVisible, previewImage, additional } = this.state;
     return (
       <>
         <Row type="flex">
           {this.previewImageList()}
-          <Upload listType="picture-card" {...this.upLoadProps()}>
+          <Upload {...additional} listType="picture-card" {...this.upLoadProps()}>
             {this.uploadButton()}
           </Upload>
         </Row>

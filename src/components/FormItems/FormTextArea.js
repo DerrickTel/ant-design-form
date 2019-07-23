@@ -17,10 +17,10 @@ class FormTextArea extends Component {
   }
 
   render() {
-    const {Message, value, disabled} = this.props;
+    const {Message, value, disabled, additional} = this.props;
     return (
-      <TextArea rows={4} disabled={disabled} placeholder={Message} value={value} onChange={this.change} />
-      );
+      <TextArea {...additional} rows={4} disabled={disabled} placeholder={Message} value={value} onChange={this.change} />
+    );
   }
 }
 

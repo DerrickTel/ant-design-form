@@ -30,9 +30,9 @@ class FormRadioGroup extends Component {
   }
 
   render() {
-    const {Message, value, disabled} = this.props;
+    const {Message, value, disabled, additional} = this.props;
     return (
-      <Group disabled={disabled} placeholder={Message} value={value} onChange={this.change}>
+      <Group {...additional} disabled={disabled} placeholder={Message} value={value} onChange={this.change}>
         {this.option()}
       </Group>
     );

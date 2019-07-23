@@ -87,7 +87,7 @@ class ModalView extends PureComponent {
 
     let ShowType;
     return data.map(value => {
-      const { label, key, type, Message, option, disabled, pattern, notRequired } = value;
+      const { label, key, type, Message, option, disabled, pattern, notRequired, additional } = value;
 
       if (disabled)
         if (!value) {
@@ -145,6 +145,7 @@ class ModalView extends PureComponent {
             initialValue: this.initialValue(showData?.[key], type),
             })(
               <ShowType
+                {...additional}
                 option={option}
                 Message={Message}
                 disabled={!!(disabled || category === 'check')}
@@ -244,11 +245,12 @@ class ModalView extends PureComponent {
     const modalData = this.caseCategory(category);
     return (
       <Modal
+        width="70%"
+        {...this.props}
         visible={show}
         onCancel={this.closeModal}
         onOk={category === 'import' ? this.importOk : this.checkOk}
         title={modalData}
-        width="70%"
         footer={modalData === '查看' ? null : undefined}
         okText="确认"
         cancelText="取消"

@@ -18,9 +18,9 @@ class FormRichTextEditor extends Component {
   }
 
   render() {
-    const {Message, value, disabled} = this.props;
+    const {Message, value, disabled, additional} = this.props;
     return (
-      <BraftEditor className="editor-wrapper border1" disabled={disabled} placeholder={Message} value={value} onChange={this.change} />
+      <BraftEditor {...additional} className="editor-wrapper border1" disabled={disabled} placeholder={Message} value={value} onChange={this.change} />
       );
   }
 }

@@ -9,9 +9,10 @@ class FormCascader extends Component {
   };
 
   render() {
-    const { value, disabled, Message, cascaderOption = [] } = this.props;
+    const { value, disabled, Message, cascaderOption = [], additional } = this.props;
     return (
       <Cascader
+        {...additional}
         placeholder={Message}
         options={cascaderOption}
         disabled={disabled}

@@ -28,9 +28,10 @@ class FormSelect extends Component {
   };
 
   render() {
-    const { Message, value, disabled } = this.props;
+    const { Message, value, disabled, additional } = this.props;
     return (
       <Select
+        {...additional}
         disabled={disabled}
         value={value}
         placeholder={Message}

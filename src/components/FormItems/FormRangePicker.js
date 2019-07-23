@@ -15,9 +15,9 @@ class FormRangePicker extends Component {
   }
 
   render() {
-    const {value, disabled} = this.props;
+    const {value, disabled, additional} = this.props;
     return (
-      <RangePicker disabled={disabled} value={value} onChange={this.change} />
+      <RangePicker {...additional} disabled={disabled} value={value} onChange={this.change} />
     );
   }
 }

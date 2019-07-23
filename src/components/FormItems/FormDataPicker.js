@@ -16,9 +16,9 @@ class FormDataPicker extends Component {
   }
 
   render() {
-    const {value, disabled} = this.props;
+    const {value, disabled, additional} = this.props;
     return (
-      <DatePicker disabled={disabled} value={value} onChange={this.change} />
+      <DatePicker {...additional} disabled={disabled} value={value} onChange={this.change} />
     );
   }
 }

@@ -74,7 +74,7 @@ class FormImageUpload extends PureComponent {
   };
 
   render() {
-    const { Message, value, disabled, isHaveInput } = this.props;
+    const { Message, value, disabled, isHaveInput, additional } = this.props;
     return (
       <>
         {isHaveInput === true ? (
@@ -82,7 +82,7 @@ class FormImageUpload extends PureComponent {
         ) : (
           ''
         )}
-        <Upload listType="picture-card" {...this.upLoadProps()}>
+        <Upload {...additional} listType="picture-card" {...this.upLoadProps()}>
           {this.showView()}
         </Upload>
       </>

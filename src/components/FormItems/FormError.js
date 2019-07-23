@@ -8,7 +8,10 @@ import React from 'react';
 
 const FormError =() => {
   return (
-    <div>很抱歉告诉你一个坏消息：你单词不对应了.请查看数据源是否对应</div>
+    <div>
+      <p>很抱歉告诉您一个坏消息：您输入的这个组件暂时不支持哦</p>
+      <a target="_blank" href="https://github.com/DerrickTel/ant-design-form/issues">点击此处提issues哦</a>
+    </div>
   );
 }
 
