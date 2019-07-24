@@ -121,6 +121,7 @@ SearchView-data
 | Message      | placeholder展示的文案                                        | string                                                   |
 | defaultValue | 默认值                                                       | 根据组件来判断（如果是日期类型是moment，一般来说是string |
 | option       | 用于select组件中的可选项。                                   | array                                                    |
+| additional   | 可以给组件加样式                                             | object                                                   |
 
 SearchView-data-type
 

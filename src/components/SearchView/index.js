@@ -62,7 +62,7 @@ class SearchView extends Component {
         case 'selectSearch':
           ShowType = FormSelectSearch;
           break;
-        case 'ImageUpload':
+        case 'imageUpload':
           ShowType = FormImageUpload;
           break;
         case 'cascader':
@@ -76,7 +76,7 @@ class SearchView extends Component {
           <Item label={this.showLabel(type, label)} key={key}>
             {getFieldDecorator(key, { initialValue: defaultValue })(
               <ShowType
-                {...additional}
+                additional={additional}
                 option={option}
                 Message={Message}
               />
@@ -100,8 +100,9 @@ class SearchView extends Component {
   }
 
   render() {
+    const {style, className} = this.props
     return (
-      <Form {...this.props} layout="inline">
+      <Form style={style} className={className} layout="inline">
         {this.form()}
         <Item>
           <Button type="primary" onClick={this.search}>查询</Button>

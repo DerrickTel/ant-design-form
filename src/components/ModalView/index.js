@@ -88,7 +88,6 @@ class ModalView extends PureComponent {
     let ShowType;
     return data.map(value => {
       const { label, key, type, Message, option, disabled, pattern, notRequired, additional } = value;
-
       if (disabled)
         if (!value) {
           return null;
@@ -145,7 +144,7 @@ class ModalView extends PureComponent {
             initialValue: this.initialValue(showData?.[key], type),
             })(
               <ShowType
-                {...additional}
+                additional={additional}
                 option={option}
                 Message={Message}
                 disabled={!!(disabled || category === 'check')}

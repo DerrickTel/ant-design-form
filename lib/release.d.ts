@@ -2,6 +2,7 @@ import * as React from 'react';
 export interface SearchViewProps {
   searchFun?: Function;
   data?: Array<Object>;
+  [index: string]: any;
 }
 declare const SearchView: React.FC<SearchViewProps>;
 
@@ -14,11 +15,12 @@ export interface FormViewProps {
   imgUploadUrl?: String;
   imgUploadHeaders?: Object;
   cascaderOption?: Array<Object>;
+  [index: string]: any;
 }
 declare const FormView: React.FC<FormViewProps>;
 
 
-export interface FormViewProps {
+export interface ModalViewProps {
   showData?: Object;
   selectSearch?: Function;
   selectSearchOption?: Array<Object>;
@@ -34,6 +36,7 @@ export interface FormViewProps {
   importCallBack?: Function;
   importColumns?: Array<Object>;
   downloadUrl?: String;
+  [index: string]: any;
 }
 declare const ModalView: React.FC<ModalViewProps>;
 
