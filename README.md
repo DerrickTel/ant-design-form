@@ -121,6 +121,7 @@ SearchView-data
 | Message      | placeholder展示的文案                                        | string                                                   |
 | defaultValue | 默认值                                                       | 根据组件来判断（如果是日期类型是moment，一般来说是string |
 | option       | 用于select组件中的可选项。                                   | array                                                    |
+| additional   | 可以给组件加样式                                             | object                                                   |
 
 SearchView-data-type
 
@@ -191,13 +192,14 @@ SearchView-data-option
 
 FormView-formData
 
-| 参数名  | 说明                                                         | 数据类型        |
-| ------- | ------------------------------------------------------------ | --------------- |
-| label   | 前端显示的文案，表示这个地方要输入什么                       | string          |
-| key     | 与服务端交互的key                                            | string          |
-| type    | 展示定制的组件（基本上都是从ant-design里面选取的）（可以是输入框，选择框等） | string          |
-| Message | placeholder展示的文案，表单错误的时候出现的文案              | string          |
-| option  | 用于select组件中的可选项。                                   | array< object > |
+| 参数名     | 说明                                                         | 数据类型        |
+| ---------- | ------------------------------------------------------------ | --------------- |
+| label      | 前端显示的文案，表示这个地方要输入什么                       | string          |
+| key        | 与服务端交互的key                                            | string          |
+| type       | 展示定制的组件（基本上都是从ant-design里面选取的）（可以是输入框，选择框等） | string          |
+| Message    | placeholder展示的文案，表单错误的时候出现的文案              | string          |
+| option     | 用于select组件中的可选项。                                   | array< object > |
+| additional | 可以给组件加样式                                             | object          |
 
 FormView-formData-type
 
@@ -375,13 +377,14 @@ class ReactDemo extends PureComponent {
 
 ModalView-data
 
-| 参数名  | 说明                                                         | 数据类型        |
-| ------- | ------------------------------------------------------------ | --------------- |
-| label   | 前端显示的文案，表示这个地方要输入什么                       | string          |
-| key     | 与服务端交互的key                                            | string          |
-| type    | 展示定制的组件（基本上都是从ant-design里面选取的）（可以是输入框，选择框等） | string          |
-| Message | placeholder展示的文案，表单错误的时候出现的文案              | string          |
-| option  | 用于select组件中的可选项。                                   | array< object > |
+| 参数名     | 说明                                                         | 数据类型        |
+| ---------- | ------------------------------------------------------------ | --------------- |
+| label      | 前端显示的文案，表示这个地方要输入什么                       | string          |
+| key        | 与服务端交互的key                                            | string          |
+| type       | 展示定制的组件（基本上都是从ant-design里面选取的）（可以是输入框，选择框等） | string          |
+| Message    | placeholder展示的文案，表单错误的时候出现的文案              | string          |
+| option     | 用于select组件中的可选项。                                   | array< object > |
+| additional | 可以给组件加样式                                             | object          |
 
 ModalView-data-type
 

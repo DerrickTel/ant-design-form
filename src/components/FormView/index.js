@@ -130,7 +130,7 @@ class FormView extends PureComponent {
             initialValue: this.initialValue(showData?.[key], type),
           })(
             <ShowType
-              {...additional}
+              additional={additional}
               showData={showData?.[key]}
               option={option}
               Message={Message}

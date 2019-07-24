@@ -6,6 +6,7 @@ import ModalView from './components/ModalView'
 import {demo1} from './constant/formView'
 import 'antd/dist/antd.css'
 import { Card, Button, Table, Divider } from 'antd';
+import SearchView from './components/SearchView';
 
 const FormView  = lazy(() => import('./components/FormView'));
 
@@ -73,6 +74,7 @@ class ReactDemo extends PureComponent {
     const {visible, category, showData} = this.state;
     return (
       <Card title="ModalViewDemo">
+        <SearchView style={{margin: '100px'}} />
         <Button onClick={() => this.clickModal('create', {})}>我是新增</Button>
         <ModalView
           onOk={params => {console.log(params); this.setState({visible: false})}}
@@ -86,6 +88,9 @@ class ReactDemo extends PureComponent {
               type: 'input',
               Message: 'ID自动录入无需您操心~',
               disabled: true,
+              additional: {
+                style: {width: '120px'}
+              }
             },
             {
               label: '姓名',
