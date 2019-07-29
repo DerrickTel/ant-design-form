@@ -13,6 +13,7 @@ import FormImageUpload from '../FormItems/FormImageUpload';
 import FormCascader from '../FormItems/FormCascader';
 import FormError from '../FormItems/FormError';
 import FormRichTextEditor from '../FormItems/FormRichTextEditor';
+import FormSelectMultiple from '../FormItems/FormSelectMultiple';
 
 const formItemLayout = {
   labelCol: {
@@ -87,7 +88,18 @@ class ModalView extends PureComponent {
 
     let ShowType;
     return data.map(value => {
-      const { label, key, type, Message, option, disabled, pattern, notRequired, additional } = value;
+      const { 
+        label, 
+        key, 
+        type, 
+        Message, 
+        option, 
+        disabled, 
+        pattern, 
+        notRequired, 
+        additional, 
+        cascaderSelectedOptions, 
+      } = value;
       if (disabled)
         if (!value) {
           return null;
@@ -126,6 +138,9 @@ class ModalView extends PureComponent {
         case 'cascader':
           ShowType = FormCascader;
           break;
+        case 'selectMultiple':
+          ShowType = FormSelectMultiple;
+          break;
         default:
           ShowType = FormError;
       }
@@ -154,6 +169,7 @@ class ModalView extends PureComponent {
                 imgUploadUrl={imgUploadUrl} // 图片上传的地址
                 imgUploadHeaders={imgUploadHeaders} // 图片上传的header
                 cascaderOption={cascaderOption} // 联级选择器的下拉框
+                cascaderSelectedOptions={cascaderSelectedOptions} // 联级选择返回SelectedOptions而不是[ID]
               />
             )}
           </Item>
@@ -164,13 +180,13 @@ class ModalView extends PureComponent {
 
   
   initialType = (type) => {
-    if(type === 'cascader' || type === 'imageUploadList') {
+    if(type === 'cascader' || type === 'imageUploadList' || type === 'rangePicker' || type === 'selectMultiple') {
       return 'array'
     }
     if(type === 'datePicker') {
       return 'object'
     }
-    return 'string'
+    return ('number' || 'string')
   }
 
   initialValue = (showData, type) => {
@@ -278,8 +294,8 @@ class ModalView extends PureComponent {
 }
 
 ModalView.propTypes = {
-  onOk: PropTypes.func.isRequired, // 弹框点击确定
-  onCancel: PropTypes.func.isRequired, // 隐藏弹框
+  onOk: PropTypes.func, // 弹框点击确定
+  onCancel: PropTypes.func, // 隐藏弹框
   show: PropTypes.bool, // 是否显示弹窗
   category: PropTypes.string, // 弹框的类型（title显示
   data: PropTypes.arrayOf(PropTypes.object).isRequired, // 数据类型; 位置:'@/components/constant/formView.js' 记得写注释; 格式: `f${文件名}`
@@ -292,6 +308,7 @@ ModalView.propTypes = {
   fileUploadHeaders: PropTypes.object, // 文件（暂时只支持excel）上传地址
   fileUploadUrl: PropTypes.string, // 文件（暂时只支持excel）上传header
   cascaderOption: PropTypes.array, // 联级选择器的下拉框
+  cascaderSelectedOptions: PropTypes.bool, // 联级选择返回SelectedOptions而不是[ID]
 };
 
 ModalView.defaultProps = {

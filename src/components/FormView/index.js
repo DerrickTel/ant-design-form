@@ -113,6 +113,9 @@ class FormView extends PureComponent {
         case 'selectGroup':
           ShowType = FormSelectGroup;
           break;
+        case 'selectMultiple':
+          ShowType = FormSelectMultiple;
+          break;
         default:
           ShowType = FormError;
       }
@@ -147,9 +150,9 @@ class FormView extends PureComponent {
       )
     })
   }
-
+  
   initialType = (type) => {
-    if(type === 'cascader' || type === 'imageUploadList') {
+    if(type === 'cascader' || type === 'imageUploadList' || type === 'rangePicker' || type === 'selectMultiple') {
       return 'array'
     }
     if(type === 'datePicker') {

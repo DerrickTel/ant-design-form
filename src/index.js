@@ -16,6 +16,7 @@ const dataSource = [
     name: '胡彦斌',
     age: 32,
     id: 'asd111asd111',
+    age2: 'https://jb-avatar.jianbaolife.com/2019/7/19/1563507778428_FuPKAyd5_VrIdz52s4pQzKe7CzLo.jpg',
   },
   {
     key: '2',
@@ -74,7 +75,37 @@ class ReactDemo extends PureComponent {
     const {visible, category, showData} = this.state;
     return (
       <Card title="ModalViewDemo">
-        <SearchView style={{margin: '100px'}} />
+        <SearchView style={{margin: '100px'}} searchFun={(params)=>console.log(params)} data={
+      [{
+        label: '所有订单',
+        key: 'pharmacyType',
+        type: 'select',
+        defaultValue: '所有订单',
+        option: [
+            { severKey: 'allList', showValue: '所有订单' }, 
+            { severKey: 'unpay', showValue: '待付款订单' }, 
+            { severKey: 'cancel', showValue: '订单取消' }, 
+            { severKey: 'returnGoods', showValue: '退订/退货' }, 
+            { severKey: 'success', showValue: '交易成功' }, 
+            { severKey: 'paid', showValue: '已付款' }
+        ],
+      }, {
+        label: '开始时间',
+        key: 'startTime',
+        type: 'datePicker',
+        Message: '请选择时间',
+      }, {
+        label: '结束时间',
+        key: 'endTime',
+        type: 'datePicker',
+        Message: '请选择时间',
+      }, {
+        label: '关键字',
+        key: 'keywords',
+        type: 'input',
+        Message: '请输入商品名称',
+      }]
+  } />
         <Button onClick={() => this.clickModal('create', {})}>我是新增</Button>
         <ModalView
           onOk={params => {console.log(params); this.setState({visible: false})}}
@@ -89,7 +120,7 @@ class ReactDemo extends PureComponent {
               Message: 'ID自动录入无需您操心~',
               disabled: true,
               additional: {
-                style: {width: '120px'}
+                style: {width: 10}
               }
             },
             {
@@ -104,10 +135,16 @@ class ReactDemo extends PureComponent {
               type: 'select',
               Message: '请选择年龄',
               option: [
-                { severKey: '32', showValue: '12岁' }, 
-                { severKey: '42', showValue: '13岁' },
+                { severKey: 32, showValue: '12岁' }, 
+                { severKey: '23', showValue: '13岁' },
               ],
             },
+            {
+              label: '年龄',
+              key: 'age2',
+              type: 'imageUpload',
+              Message: '请选择年龄',
+            }
           ]}
           showData={showData}
         />

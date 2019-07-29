@@ -3,9 +3,13 @@ import { Cascader } from 'antd';
 import PropTypes from 'prop-types';
 
 class FormCascader extends Component {
-  change = e => {
-    const { onChange } = this.props;
-    onChange(e);
+  change = (value, selectedOptions) => {
+    const { onChange, cascaderSelectedOptions } = this.props;
+    if(cascaderSelectedOptions) {
+      onChange(selectedOptions)
+    } else {
+      onChange(value);
+    }
   };
 
   render() {

@@ -36,6 +36,8 @@ export interface ModalViewProps {
   importCallBack?: Function;
   importColumns?: Array<Object>;
   downloadUrl?: String;
+  onOk?: Function;
+  onCancel?: Function;
   [index: string]: any;
 }
 declare const ModalView: React.FC<ModalViewProps>;

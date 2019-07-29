@@ -1,15 +1,9 @@
-/*
- * @Author: Derrick
- * @Date: 2019-04-10 10:13:58
- * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2019-06-27 17:28:57
- */
 import React, { Component } from 'react';
 import { Select } from 'antd';
 import PropTypes, { object } from 'prop-types';
 
 const { Option } = Select;
-class FormSelect extends Component {
+class FormSelectMultiple extends Component {
   option = () => {
     const { option = [] } = this.props;
     return option.map(v => {
@@ -23,19 +17,23 @@ class FormSelect extends Component {
   };
 
   selectCurrency = e => {
-    const { onChange } = this.props;
+    const { onChange, selectCallback, useSelectCallback } = this.props;
+    if(selectCallback && useSelectCallback) {
+      selectCallback(e)
+    }
     onChange(e);
   };
 
   render() {
-    const { Message, value, disabled, additional } = this.props;
+    const { Message, value, disabled } = this.props;
     return (
       <Select
-        {...additional}
         disabled={disabled}
         value={value}
         placeholder={Message}
-        onSelect={this.selectCurrency}
+        // style={{ width: '170px' }}
+        onChange={this.selectCurrency}
+        mode="multiple"
       >
         {this.option()}
       </Select>
@@ -43,16 +41,16 @@ class FormSelect extends Component {
   }
 }
 
-FormSelect.propsType = {
+FormSelectMultiple.propsType = {
   disabled: PropTypes.bool, // 是否不可选
   Message: PropTypes.string, // 默认文字（placeholder
   option: PropTypes.arrayOf(object), // 选择框的选项
 };
 
-FormSelect.defalutProps = {
+FormSelectMultiple.defalutProps = {
   disabled: false,
   Message: '',
   option: [],
 };
 
-export default FormSelect;
+export default FormSelectMultiple;

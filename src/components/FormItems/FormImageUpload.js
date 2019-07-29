@@ -1,11 +1,12 @@
 import React, { PureComponent } from 'react';
-import { Upload, Icon, message, Input } from 'antd';
+import { Upload, Icon, message, Input, Modal } from 'antd';
 import PropTypes from 'prop-types';
 import { isUrl, isColor } from '../../util/utils';
 
 class FormImageUpload extends PureComponent {
   state = {
     loading: false,
+    visible: false
   };
 
   uploadButton = () => {
@@ -13,7 +14,7 @@ class FormImageUpload extends PureComponent {
     return (
       <div>
         <Icon type={loading ? 'loading' : 'plus'} />
-        <div className="ant-upload-text">Upload</div>
+        <div className="ant-upload-text">点我上传图片</div>
       </div>
     );
   };
@@ -26,8 +27,8 @@ class FormImageUpload extends PureComponent {
     if (info.file.status === 'done') {
       const { onChange } = this.props;
       console.log(onChange)
-      this.setState({ imageUrl: info.file.response.data[0], loading: false });
-      onChange(info.file.response.data[0]);
+      this.setState({ imageUrl: info.file.response.data, loading: false });
+      onChange(info.file.response.data);
     }
   };
 
@@ -58,34 +59,39 @@ class FormImageUpload extends PureComponent {
   };
 
   showView = () => {
-    const { imageUrl } = this.state;
-    const { value } = this.props;
-    const style = { width: 100, height: 100 };
-    if (imageUrl) {
-      return <img style={style} src={imageUrl} alt="resource" />;
-    }
-    if (isUrl(value)) {
-      return <img style={style} src={value} alt="resource" />;
-    }
-    if (isColor(value)) {
-      return <div style={{ backgroundColor: `#${value}`, height: 100, width: 100 }} />;
-    }
+    // const { imageUrl } = this.state;
+    // const { value } = this.props;
+    // const style = { width: 100, height: 100 };
+    // if (imageUrl) {
+    //   return <img style={style} src={imageUrl} alt="resource" />;
+    // }
+    // if (isUrl(value)) {
+    //   return <img style={style} src={value} alt="resource" />;
+    // }
+    // if (isColor(value)) {
+    //   return <div style={{ backgroundColor: `#${value}`, height: 100, width: 100 }} />;
+    // }
     return this.uploadButton();
   };
 
   render() {
     const { Message, value, disabled, isHaveInput, additional } = this.props;
     return (
-      <>
+      <div style={{display: 'flex'}}>
         {isHaveInput === true ? (
           <Input disabled={disabled} placeholder={Message} value={value} onChange={this.change} />
         ) : (
           ''
         )}
-        <Upload {...additional} listType="picture-card" {...this.upLoadProps()}>
+        {value && <img onClick={() => {this.setState({visible: true})}} style={{ width: 100, height: 100, marginRight: 20 }} src={value} alt="resource" />}
+        <Upload {...additional} disabled={disabled} listType="picture-card" {...this.upLoadProps()}>
           {this.showView()}
         </Upload>
-      </>
+
+        <Modal footer={null} onCancel={()=>{this.setState({visible: false})}} visible={this.state.visible}>
+          <img style={{maxWidth: '100%'}} src={value}  />
+        </Modal>
+      </div>
     );
   }
 }
