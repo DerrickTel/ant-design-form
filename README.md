@@ -1,6 +1,8 @@
+# 警告
 
+经过探索, 发现有更好用, 有我未来的目标并且已经得到实现的表单 [@uform](https://github.com/alibaba/uform) 所以, 停止维护了
 
-# 安装
+## 安装
 
 ```javascript
 npm install ant-design-form
