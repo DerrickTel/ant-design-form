@@ -2,7 +2,9 @@
 
 现在的版本是针对4.0之前的ant-design
 
-接下来有空会更新4.0版本的
+现在在帮忙维护https://github.com/ant-design/pro-components
+
+chenshuai大哥帮忙做了很多我想做但是我做不出来的东西。
 
 ## 安装
 
